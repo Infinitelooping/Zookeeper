@@ -24,8 +24,10 @@ const app = express();
 
 
 
-
-
+function findById(id, animalsArray) {
+  const result = animalsArray.filter(animal => animal.id === id)[0];
+  return result;
+}
 
 //filters by media query
 function filterByQuery(query, animalsArray) {
@@ -74,9 +76,18 @@ app.get('/api/animals', (req, res) => {
     results = filterByQuery(req.query, results);
   }
   res.json(results);
-  });
+});
+
+app.get('/api/animals/:id', (req, res) => {
+  const result = findById(req.params.id, animals);
+  if (result) {
+    res.json(result);
+  } else {
+    res.send(404);
+  }
+});
 
 // run npm start
 app.listen(PORT, () => {
-    console.log(`API server now on port 3001!`);
+  console.log(`API server now on port 3001!`);
 })
