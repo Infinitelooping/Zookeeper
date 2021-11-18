@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 3001;
 //instantiate the server
 const app = express();
 
-// parse incoming string or array data
+// parse incoming string or array data.. use this for req.body to write
 app.use(express.urlencoded({ extended: true }));
 // parse incoming JSON data
 app.use(express.json());
