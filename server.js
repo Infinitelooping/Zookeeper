@@ -11,6 +11,8 @@ const PORT = process.env.PORT || 3001;
 //instantiate the server
 const app = express();
 
+// paths to the public folder and instructs the server to make thse files static resources. This means all of the front-end code can now be accessed without havinga specific server endpoint.
+app.use(express.static('public'));
 // parse incoming string or array data.. use this for req.body to write
 app.use(express.urlencoded({ extended: true }));
 // parse incoming JSON data
@@ -131,6 +133,22 @@ app.post('/api/animals', (req, res) => {
     const animal = createNewAnimal(req.body, animals);
     res.json(animal);
   }
+});
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/index.html'));
+});
+
+app.get('/animals', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/animals.html'));
+});
+
+app.get('/zookeepers', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/zookeepers.html'));
+});
+//* wildcard routethats ends us as the homepage
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/index.html'));
 });
 
 // run npm start
